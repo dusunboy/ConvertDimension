@@ -2,27 +2,28 @@
 This tool is about convert dimensions of Android project which in 
 res/values-swXXXdp/dimens.xml and convert to the others.
 
-Now available: sw320dp, sw360dp, sw600dp, sw720dp and sw800dp.
+Now available: sw320dp, sw480dp, sw600dp, sw720dp and sw820dp.
 
 Developed by Smilee with JAVA programming @2014/09/01.
 
-Modified in 2014/09/03.
+    1.Modified in 2014/09/03.
+    2.Modified in 2014/11/24.
 -------------------------------------------------------------
 
 Introduction：
 
-	This ConvertDimen.jar file was a runnable JAR file, which support you to convert dimension of res/values-swXXXdp/dimens.xml in Android project. Because many devices are using Android as their OS, and Android wants to support each kinds of these device with different screen size and density. So Android use dimens.xml with sw(which means - smallest width)XXX(which can be 320, 360, 600, 720, 800.etc)dp, to achieve this goal.
+	This ConvertDimen.jar file was a runnable JAR file, which support you to convert dimension of res/values-swXXXdp/dimens.xml in Android project. Because many devices are using Android as their OS, and Android wants to support each kinds of these device with different screen size and density. So Android use dimens.xml with sw(which means - smallest width)XXX(which can be 320, 480, 600, 720, 820.etc)dp, to achieve this goal.
 	
-	This tools allows you to convert different dimensions in dimens.xml between sw320dp, sw360dp, sw600dp, sw720dp and sw800dp. Which means if you give a res/values-sw320dp/dimens.xml, and you can get four more files which are values-sw360dp/dimens.xml, values-sw600dp/dimens.xml, values-sw720dp/dimens.xml, and values-sw800dp/dimens.xml. 
+	This tools allows you to convert different dimensions in dimens.xml between sw320dp, sw480dp, sw600dp, sw720dp and sw820dp. Which means if you give a res/values-sw320dp/dimens.xml, and you can get four more files which are values-sw480dp/dimens.xml, values-sw600dp/dimens.xml, values-sw720dp/dimens.xml, and values-sw820dp/dimens.xml. 
 	
 	An example shows below:
 ・Gives: 
 	<dimen name="abc">1dp</dimen> in res/values-sw320dp/dimens.xml
 ・Get: 
-	<dimen name="abc">1.125dp</dimen> in res/values-sw360dp/dimens.xml
+	<dimen name="abc">1.125dp</dimen> in res/values-sw480dp/dimens.xml
 	<dimen name="abc">1.875dp</dimen> in res/values-sw600dp/dimens.xml
 	<dimen name="abc">2.25dp</dimen> in res/values-sw720dp/dimens.xml
-	<dimen name="abc">2.5dp</dimen> in res/values-sw800dp/dimens.xml
+	<dimen name="abc">2.5dp</dimen> in res/values-sw820dp/dimens.xml
 
 How to use:
 
@@ -47,7 +48,7 @@ How to use:
 		・mDimenName: xxxlarge_text_size & nowDimenValue=24sp
 		・mDimenName: now_dp & nowDimenValue=10dp
 		・-------------------------
-		・This file is based on - 1.sw320dp 2.sw360dp 3.sw600dp 4.sw720dp 5.sw800dp (plz enter the number):  
+		・This file is based on - 1.sw320dp 2.sw480dp 3.sw600dp 4.sw720dp 5.sw820dp (plz enter the number):  
 	*In my case, my dimens.xml includes 11 dimension elements.
 	*The savingPath means when this convert process was done, the new dimension files will save at this path.
 	6. And I need to enter "1" in this case, but choose a correct type in your case!! 
