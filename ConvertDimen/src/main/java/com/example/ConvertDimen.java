@@ -1,5 +1,9 @@
 package com.example;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,27 +16,26 @@ import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.xml.parsers.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.xml.sax.*;
-import org.w3c.dom.*;
-
 public class ConvertDimen {
 
-    static final String sw320dp = "sw320dp";
-    static final String sw480dp = "sw480dp";
-    static final String sw600dp = "sw600dp";
-    static final String sw720dp = "sw720dp";
-    static final String sw820dp = "sw820dp";
+    static final String w320dp = "w320dp";
+    static final String w480dp = "w480dp";
+    static final String w600dp = "w600dp";
+    static final String w720dp = "w720dp";
+    static final String w820dp = "w820dp";
     static String expression = null, originFilePath = "", savingPath = null;
     static int inputType;
     static NodeList nodeList;
     static String[] mDimenName;
-    static String[] types = new String[] {sw320dp, sw480dp, sw600dp, sw720dp, sw820dp};
+    static String[] types = new String[] {w320dp, w480dp, w600dp, w720dp, w820dp};
     static File xmlFile = null;
     // /Users/smilee_yang/Documents/workspace/SupportDifferentSize/res/values/dimens.xml
 
@@ -86,7 +89,7 @@ public class ConvertDimen {
                     }
                     if (nowDimenValue.length != 0) {
                         System.out.println("-------------------------");
-                        System.out.print("This file is based on - 1.sw320dp 2.sw480dp 3.sw600dp 4.sw720dp 5.sw820dp (plz enter the number): ");
+                        System.out.print("This file is based on - 1.w320dp 2.w480dp 3.w600dp 4.w720dp 5.w820dp (plz enter the number): ");
                         String densityType = null;
                         int nowChoice = 0;
                         do {
@@ -97,7 +100,7 @@ public class ConvertDimen {
                                 inputType = nowChoice;
                                 filterUnit(nowDimenValue);
                             } else {
-                                System.out.print("Please enter the number either 1 or 2 or 3 or 4 or 5 (1.sw320dp 2.sw480dp 3.sw600dp 4.sw720dp 5.sw820dp): ");
+                                System.out.print("Please enter the number either 1 or 2 or 3 or 4 or 5 (1.w320dp 2.w480dp 3.w600dp 4.w720dp 5.w820dp): ");
                             }
                         } while (!densityType.matches("[1-6]"));
                         System.out.println("Convert process completed.");
@@ -152,17 +155,17 @@ public class ConvertDimen {
 
     public static void writingLoop(String[] nowDimenValue, String[] onlyValue) {
         String[][] newDimenValue = new String[onlyValue.length][onlyValue.length];
-//        Double[] formulaForSw320dp = new Double[] { 1.125, 1.875, 2.25, 2.5 }; // sw320dp to sw360dp, sw600dp, sw720dp, sw800dp
-//        Double[] formulaForSw360dp = new Double[] { 0.89, 1.67, 2.0, 2.22 }; // sw360dp to sw320dp, sw600dp, sw720dp, sw800dp
-//        Double[] formulaForSw600dp = new Double[] { 0.53, 0.6, 1.2, 1.33 }; // sw600dp to sw320dp, sw360dp, sw720dp, sw800dp
-//        Double[] formulaForSw720dp = new Double[] { 0.44, 0.5, 0.83, 1.11 }; // sw720dp to sw320dp, sw360dp, sw600dp, sw800dp
-//        Double[] formulaForSw800dp = new Double[] { 0.4, 0.45, 0.75, 0.9 }; // sw800dp to sw320dp, sw360dp, sw600dp, sw720dp
+//        Double[] formulaForSw320dp = new Double[] { 1.125, 1.875, 2.25, 2.5 }; // w320dp to sw360dp, w600dp, w720dp, sw800dp
+//        Double[] formulaForSw360dp = new Double[] { 0.89, 1.67, 2.0, 2.22 }; // sw360dp to w320dp, w600dp, w720dp, sw800dp
+//        Double[] formulaForSw600dp = new Double[] { 0.53, 0.6, 1.2, 1.33 }; // w600dp to w320dp, sw360dp, w720dp, sw800dp
+//        Double[] formulaForSw720dp = new Double[] { 0.44, 0.5, 0.83, 1.11 }; // w720dp to w320dp, sw360dp, w600dp, sw800dp
+//        Double[] formulaForSw800dp = new Double[] { 0.4, 0.45, 0.75, 0.9 }; // sw800dp to w320dp, sw360dp, w600dp, w720dp
 
-        Double[] formulaForSw320dp = new Double[] { 1.0,  1.5,  1.875, 2.25, 2.56 };  // sw320dp to sw480dp, sw600dp, sw720dp, sw820dp
-        Double[] formulaForSw480dp = new Double[] { 0.67, 1.0,  1.25,  1.5,  1.71 };   // sw480dp to sw320dp, sw600dp, sw720dp, sw820dp
-        Double[] formulaForSw600dp = new Double[] { 0.53, 0.8,  1.0,   1.2,  1.37 };    // sw600dp to sw320dp, sw480dp, sw720dp, sw820dp
-        Double[] formulaForSw720dp = new Double[] { 0.44, 0.67, 0.83,  1.0,  1.14 };   // sw720dp to sw320dp, sw480dp, sw600dp, sw820dp
-        Double[] formulaForSw820dp = new Double[] { 0.39, 0.56, 0.73, 0.88,  1.0  };    // sw820dp to sw320dp, sw480dp, sw600dp, sw720dp
+        Double[] formulaForSw320dp = new Double[] { 1.0,  1.5,  1.875, 2.25, 2.56 };  // w320dp to w480dp, w600dp, w720dp, w820dp
+        Double[] formulaForSw480dp = new Double[] { 0.67, 1.0,  1.25,  1.5,  1.71 };   // w480dp to w320dp, w600dp, w720dp, w820dp
+        Double[] formulaForSw600dp = new Double[] { 0.53, 0.8,  1.0,   1.2,  1.37 };    // w600dp to w320dp, w480dp, w720dp, w820dp
+        Double[] formulaForSw720dp = new Double[] { 0.44, 0.67, 0.83,  1.0,  1.14 };   // w720dp to w320dp, w480dp, w600dp, w820dp
+        Double[] formulaForSw820dp = new Double[] { 0.39, 0.56, 0.73, 0.88,  1.0  };    // w820dp to w320dp, w480dp, w600dp, w720dp
         int formula = formulaForSw320dp.length;
         BigDecimal bd;
         for (int times = 0; times < formula; times++) {
